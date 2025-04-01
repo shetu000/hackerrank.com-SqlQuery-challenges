@@ -1,0 +1,8 @@
+SELECT a.roll_number, a.name
+FROM student_information a
+INNER JOIN (
+    SELECT roll_number, SUM(subject_one + subject_two + subject_three) AS total_marks
+    FROM examination_marks
+    GROUP BY roll_number
+    HAVING total_marks < 100
+) b ON a.roll_number = b.roll_number;
