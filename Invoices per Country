@@ -1,0 +1,11 @@
+Question: A business is analyzing data by country. For each country, display the country name, total number of invoices and their abverage amount.Format the  average as a floating-point number with 6 decimal places.Return only those countries where their average invoice amount is greater than the average invoice amount over all invoices.
+
+**query result**
+
+SELECT co.country_name, COUNT(*) AS invoice_count, AVG(i.total_price) AS avg_price
+FROM country co
+JOIN city ci ON co.id = ci.country_id
+JOIN customer cu ON ci.id = cu.city_id
+JOIN invoice i ON cu.id = i.customer_id
+GROUP BY co.country_name
+HAVING AVG(i.total_price) > (SELECT AVG(total_price) FROM invoice);
